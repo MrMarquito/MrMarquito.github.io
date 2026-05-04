@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.5);
-            --bg-dark: #070b14;
-            --bg-card: rgba(30, 41, 59, 0.7);
+            /* Deep Purple Theme */
+            --primary: #a855f7; 
+            --primary-glow: rgba(168, 85, 247, 0.5);
+            --bg-dark: #0b0514; 
+            --bg-card: rgba(35, 20, 55, 0.6);
             --text-main: #f8fafc;
-            --text-dim: #94a3b8;
+            --text-dim: #cbd5e1;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,12 +44,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(7, 11, 20, 0.8);
+            background: rgba(11, 5, 20, 0.8);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
         
         .nav-links a {
@@ -63,7 +64,7 @@
         /* Hero Section */
         .hero { padding: 120px 0 80px; text-align: center; }
         .hero h1 { font-size: 4rem; margin-bottom: 10px; color: #fff; letter-spacing: -1px; }
-        .hero h1 span { color: var(--primary); }
+        .hero h1 span { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
         .hero p { font-size: 1.25rem; color: var(--text-dim); max-width: 650px; margin: 0 auto 30px; }
         
         .social-links a {
@@ -72,7 +73,7 @@
             margin: 0 15px;
             transition: all 0.3s ease;
         }
-        .social-links a:hover { color: var(--primary); transform: translateY(-3px); }
+        .social-links a:hover { color: var(--primary); transform: translateY(-3px); text-shadow: 0 0 10px var(--primary-glow); }
 
         /* Section Headers */
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
@@ -84,6 +85,7 @@
             background: var(--primary);
             margin: 10px auto 0;
             border-radius: 2px;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
 
         /* Project Grid */
@@ -94,69 +96,117 @@
             gap: 30px;
         }
 
-        /* Glassmorphism Cards with Scroll Animation */
+        /* Interactive Cards */
         .project-card {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
             opacity: 0;
             transform: translateY(30px);
+            position: relative;
+            min-height: 260px;
+            cursor: pointer;
         }
         
         .project-card.show { opacity: 1; transform: translateY(0); }
         .project-card:hover { 
             transform: translateY(-10px) scale(1.02); 
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56, 189, 248, 0.1);
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 20px rgba(168, 85, 247, 0.2);
         }
 
-        .project-info { padding: 30px; }
-        .project-info h3 { margin-bottom: 10px; font-size: 1.5rem; }
-        .project-tags { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
+        /* Card Front (Always Visible) */
+        .card-front {
+            padding: 40px 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-front h3 { margin-bottom: 15px; font-size: 1.6rem; color: #fff; }
+        .project-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
         .tag {
             font-size: 0.75rem;
-            background: rgba(56, 189, 248, 0.1);
+            background: rgba(168, 85, 247, 0.15);
             padding: 5px 12px;
             border-radius: 20px;
-            color: var(--primary);
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: #e9d5ff;
+            border: 1px solid rgba(168, 85, 247, 0.3);
             font-weight: bold;
         }
+        
+        .hover-hint {
+            font-size: 0.85rem;
+            color: var(--primary);
+            opacity: 0.8;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-        .project-info p { color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
+        /* Card Overlay (Shows on Hover/Click) */
+        .card-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 8, 25, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-in-out;
+            border-radius: 15px;
+        }
+
+        /* Trigger overlay on hover OR when clicked (for mobile) */
+        .project-card:hover .card-overlay,
+        .project-card.active .card-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-overlay p { color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
 
         .btn-github {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            background: rgba(255,255,255,0.05);
-            color: var(--text-main);
+            background: rgba(168, 85, 247, 0.1);
+            color: #fff;
             text-decoration: none;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--primary);
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            font-weight: bold;
         }
-        .btn-github:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+        .btn-github:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary-glow); }
 
         /* Skills */
         .skills-sec { padding: 60px 0 100px; text-align: center; }
         .skill-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 800px; margin: 0 auto; }
         .badge { 
-            background: rgba(255,255,255,0.05); 
+            background: rgba(255,255,255,0.03); 
             padding: 12px 25px; 
             border-radius: 50px; 
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(168, 85, 247, 0.2);
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        .badge:hover { background: rgba(56, 189, 248, 0.15); border-color: var(--primary); transform: scale(1.05); }
+        .badge:hover { background: rgba(168, 85, 247, 0.15); border-color: var(--primary); transform: scale(1.05); box-shadow: 0 0 15px rgba(168,85,247,0.3); }
 
-        footer { text-align: center; padding: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); font-size: 0.9rem; }
+        footer { text-align: center; padding: 30px; border-top: 1px solid rgba(168, 85, 247, 0.2); color: var(--text-dim); font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -186,39 +236,75 @@
         <h2 class="section-title">Selected Works</h2>
         <div class="project-grid">
 
-            <div class="project-card">
-                <div class="project-info">
-                    <div class="project-tags"><span class="tag">C++</span> <span class="tag">Algorithms</span> <span class="tag">Award Winner</span></div>
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
                     <h3>Trading Algorithm</h3>
+                    <div class="project-tags"><span class="tag">C++</span> <span class="tag">Algorithms</span> <span class="tag">Award Winner</span></div>
+                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                </div>
+                <div class="card-overlay">
                     <p>Secured 3rd Place overall in an intense collegiate algorithmic programming competition. Engineered a highly efficient engine to solve complex quantitative trading challenges with low-latency execution.</p>
                     <a href="https://github.com/MrMarquito" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
-            <div class="project-card">
-                <div class="project-info">
-                    <div class="project-tags"><span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">REST API</span></div>
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
                     <h3>E-Commerce & Chat Suite</h3>
+                    <div class="project-tags"><span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">REST API</span></div>
+                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                </div>
+                <div class="card-overlay">
                     <p>A full-stack cross-platform mobile application combining a dynamic product marketplace with real-time user messaging, utilizing external APIs and complex state management.</p>
                     <a href="https://github.com/MrMarquito/e_commerce" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
-            <div class="project-card">
-                <div class="project-info">
-                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">Physics/Math</span> <span class="tag">OOP</span></div>
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
                     <h3>2D Physics Sandbox</h3>
+                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">Physics Engine</span> <span class="tag">OOP</span></div>
+                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                </div>
+                <div class="card-overlay">
                     <p>Built a custom physics simulation engine from the ground up that models complex object interaction, elastic collisions, and gravitational pull based on precise mathematical parameters.</p>
                     <a href="https://github.com/MrMarquito/2DPhysicsSandbox" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
-            <div class="project-card">
-                <div class="project-info">
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
+                    <h3>Inventory Management</h3>
                     <div class="project-tags"><span class="tag">Java</span> <span class="tag">System Design</span></div>
-                    <h3>Inventory Management System</h3>
+                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                </div>
+                <div class="card-overlay">
                     <p>Developed an enterprise-style architecture for local business logic, allowing for seamless tracking, updating, and manipulation of large-scale inventory data structures.</p>
                     <a href="https://github.com/MrMarquito/InventoryManagement" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
+                    <h3>Weather Forecast App</h3>
+                    <div class="project-tags"><span class="tag">Flutter</span> <span class="tag">Python</span> <span class="tag">Async Data</span></div>
+                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                </div>
+                <div class="card-overlay">
+                    <p>A sleek mobile application that fetches, parses, and visually renders real-time meteorological data by integrating third-party APIs with a Python backend infrastructure.</p>
+                    <a href="https://github.com/MrMarquito/WeatherYT" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
+                    <h3>Tetris Clone</h3>
+                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">Game Dev</span> <span class="tag">Data Structures</span></div>
+                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                </div>
+                <div class="card-overlay">
+                    <p>Recreated the classic puzzle game using advanced Object-Oriented Programming and grid-based data structures to handle collision detection, rotation matrices, and game state loops.</p>
+                    <a href="https://github.com/MrMarquito/Tetris" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
@@ -228,14 +314,14 @@
     <section id="skills" class="skills-sec">
         <h2 class="section-title">Technical Arsenal</h2>
         <div class="skill-badges">
-            <div class="badge"><i class="fab fa-apple"></i> Swift (Certified)</div>
+            <div class="badge" style="color: #fff;"><i class="fab fa-apple"></i> Swift (Certified)</div>
             <div class="badge" style="color: #54C5F8;"><i class="fab fa-flutter"></i> Flutter & Dart</div>
             <div class="badge" style="color: #f89820;"><i class="fab fa-java"></i> Java</div>
             <div class="badge" style="color: #659ad2;">C++ / C</div>
             <div class="badge" style="color: #FFD43B;"><i class="fab fa-python"></i> Python</div>
             <div class="badge">RESTful APIs</div>
             <div class="badge"><i class="fab fa-linux"></i> Linux OS</div>
-            <div class="badge"><i class="fab fa-salesforce"></i> Salesforce CRM</div>
+            <div class="badge" style="color: #00a1e0;"><i class="fab fa-salesforce"></i> Salesforce CRM</div>
         </div>
     </section>
 
@@ -245,7 +331,7 @@
 </div>
 
 <script>
-    // 1. Particle Network Background
+    // 1. Particle Network Background (Updated to Purple Theme)
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     
@@ -272,7 +358,8 @@
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, width, height);
         
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.5)';
+        // Purple particles
+        ctx.fillStyle = 'rgba(168, 85, 247, 0.5)';
         ctx.lineWidth = 0.5;
 
         for (let i = 0; i < particles.length; i++) {
@@ -287,13 +374,13 @@
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fill();
 
-            // Draw connections
+            // Draw connections with purple gradient
             for (let j = i + 1; j < particles.length; j++) {
                 let p2 = particles[j];
                 let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
                 
                 if (dist < 120) {
-                    ctx.strokeStyle = `rgba(56, 189, 248, ${1 - dist/120})`;
+                    ctx.strokeStyle = `rgba(168, 85, 247, ${1 - dist/120})`;
                     ctx.beginPath();
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(p2.x, p2.y);
