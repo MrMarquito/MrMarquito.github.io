@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcos Cruz Bazan | Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --accent: #38bdf8;
+            --secondary: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 0.5rem; color: var(--accent); }
+        .subtitle { font-size: 1.2rem; color: var(--secondary); }
+
+        .section-title {
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            margin: 2rem 0;
+            padding-bottom: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .tag {
+            display: inline-block;
+            background: #0ea5e9;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .contact-links a {
+            color: var(--accent);
+            text-decoration: none;
+            margin-right: 1.5rem;
+            font-weight: bold;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            background: #334155;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Marcos A. Cruz Bazan</h1>
+            <p class="subtitle">Computer Science Student @ FIU | App Developer</p>
+            <div class="contact-links">
+                <a href="mailto:m.cruzbazan02@gmail.com">Email</a>
+                <a href="https://linkedin.com/in/marcos-antonio-cruz-bazan">LinkedIn</a>
+                <a href="https://github.com/MrMarquito">GitHub</a>
+            </div>
+        </header>
+
+        <section id="about">
+            <h2 class="section-title">About Me</h2>
+            <p>I am a detail-oriented CS student with a passion for software architecture and mobile ecosystems. Currently pursuing my BS at Florida International University, I specialize in Swift and Flutter development.</p>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Trading Algorithm</h3>
+                    <p>Award-winning algorithm developed for a high-level competition.</p>
+                    <div><span class="tag">C++</span> <span class="tag">Algorithms</span></div>
+                    <p>🏆 3rd Place - Algorithm & Planning Categories</p>
+                </div>
+                <div class="card">
+                    <h3>Flutter E-Commerce</h3>
+                    <p>A full-stack mobile shopping experience with real-time updates.</p>
+                    <div><span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">REST API</span></div>
+                </div>
+                <div class="card">
+                    <h3>Physics Sandbox</h3>
+                    <p>A 2D simulation engine modeling real-world physics and collisions.</p>
+                    <div><span class="tag">Java</span> <span class="tag">OOP</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title">Technical Toolkit</h2>
+            <div class="skills-list">
+                <div class="skill-item">Swift (Certified)</div>
+                <div class="skill-item">Flutter & Dart</div>
+                <div class="skill-item">C++ / C</div>
+                <div class="skill-item">Java</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">Salesforce CRM</div>
+                <div class="skill-item">Linux</div>
+            </div>
+        </section>
+
+        <footer>
+            <p style="text-align: center; margin-top: 4rem; color: var(--secondary);">
+                © 2026 Marcos Cruz Bazan | Built for the Web
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
