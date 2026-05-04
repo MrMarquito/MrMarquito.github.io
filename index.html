@@ -3,190 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcos Cruz Bazan | Portfolio</title>
+    <title>Marcos Cruz Bazan | Software Engineer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary: #38bdf8;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
+            --primary-glow: rgba(56, 189, 248, 0.5);
+            --bg-dark: #070b14;
+            --bg-card: rgba(30, 41, 59, 0.7);
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            margin: 0;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        /* Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
 
-        /* Navigation */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+        /* Glassmorphism Nav */
         nav {
-            padding: 1.5rem 0;
+            padding: 1.5rem 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #334155;
+            background: rgba(7, 11, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+        
         .nav-links a {
             color: var(--text-main);
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 25px;
             font-weight: 500;
+            transition: color 0.3s;
         }
-        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
 
         /* Hero Section */
-        .hero { padding: 80px 0; text-align: center; }
-        .hero h1 { font-size: 3.5rem; margin: 0; color: var(--primary); }
-        .hero p { font-size: 1.2rem; color: var(--text-dim); max-width: 600px; margin: 10px auto; }
+        .hero { padding: 120px 0 80px; text-align: center; }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; color: #fff; letter-spacing: -1px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.25rem; color: var(--text-dim); max-width: 650px; margin: 0 auto 30px; }
+        
+        .social-links a {
+            color: var(--text-main);
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover { color: var(--primary); transform: translateY(-3px); }
+
+        /* Section Headers */
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
 
         /* Project Grid */
+        .projects-section { padding: 80px 0; }
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            margin-top: 40px;
         }
 
+        /* Glassmorphism Cards with Scroll Animation */
         .project-card {
             background: var(--bg-card);
+            backdrop-filter: blur(10px);
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid #334155;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .project-card.show { opacity: 1; transform: translateY(0); }
+        .project-card:hover { 
+            transform: translateY(-10px) scale(1.02); 
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56, 189, 248, 0.1);
         }
 
-        .project-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-
-        /* Media Container (For Pictures or Videos) */
-        .project-media {
-            width: 100%;
-            height: 200px;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .project-media img, .project-media video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .project-info { padding: 25px; }
-        .project-info h3 { margin-top: 0; color: var(--primary); }
-        .project-tags { margin-bottom: 15px; }
+        .project-info { padding: 30px; }
+        .project-info h3 { margin-bottom: 10px; font-size: 1.5rem; }
+        .project-tags { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 8px; }
         .tag {
             font-size: 0.75rem;
-            background: #334155;
-            padding: 4px 10px;
-            border-radius: 5px;
-            margin-right: 5px;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
             color: var(--primary);
-        }
-
-        .btn-github {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: var(--primary);
-            color: #000;
-            text-decoration: none;
-            border-radius: 8px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
             font-weight: bold;
         }
 
-        /* Skills Section */
-        .skills-sec { padding: 60px 0; text-align: center; }
-        .skill-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
-        .badge { background: #1e293b; padding: 10px 20px; border-radius: 50px; border: 1px solid #334155; }
+        .project-info p { color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem; }
 
-        footer { text-align: center; padding: 40px; border-top: 1px solid #334155; color: var(--text-dim); }
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .btn-github:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        /* Skills */
+        .skills-sec { padding: 60px 0 100px; text-align: center; }
+        .skill-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 800px; margin: 0 auto; }
+        .badge { 
+            background: rgba(255,255,255,0.05); 
+            padding: 12px 25px; 
+            border-radius: 50px; 
+            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .badge:hover { background: rgba(56, 189, 248, 0.15); border-color: var(--primary); transform: scale(1.05); }
+
+        footer { text-align: center; padding: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <nav>
-        <div style="font-weight: bold; font-size: 1.5rem;">MC<span style="color:var(--primary)">.</span></div>
-        <div class="nav-links">
-            <a href="#projects">Projects</a>
-            <a href="#experience">Experience</a>
-            <a href="https://github.com/MrMarquito">GitHub</a>
-        </div>
-    </nav>
+<canvas id="bg-canvas"></canvas>
 
+<nav>
+    <div style="font-weight: bold; font-size: 1.5rem; letter-spacing: 1px;">MC<span style="color:var(--primary)">.</span></div>
+    <div class="nav-links">
+        <a href="#projects">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="mailto:m.cruzbazan02@gmail.com">Contact</a>
+    </div>
+</nav>
+
+<div class="container">
     <section class="hero">
-        <h1>Marcos Cruz Bazan</h1>
-        <p>Computer Science Student at FIU & App Developer specializing in Swift, Flutter, and Algorithmic Efficiency.</p>
+        <h1>Marcos <span>Cruz Bazan</span></h1>
+        <p>Computer Science Student at FIU & Certified Swift Developer specializing in mobile architecture, complex algorithms, and scalable backend solutions.</p>
+        <div class="social-links">
+            <a href="https://github.com/MrMarquito" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/marcos-antonio-cruz-bazan" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
     </section>
 
-    <section id="projects">
-        <h2 style="text-align: center; font-size: 2rem;">Selected Works</h2>
+    <section id="projects" class="projects-section">
+        <h2 class="section-title">Selected Works</h2>
         <div class="project-grid">
 
             <div class="project-card">
-                <div class="project-media">
-                    <div style="color:#555">Video/Image Placeholder</div>
-                </div>
                 <div class="project-info">
-                    <div class="project-tags"><span class="tag">C++</span> <span class="tag">Algorithms</span></div>
+                    <div class="project-tags"><span class="tag">C++</span> <span class="tag">Algorithms</span> <span class="tag">Award Winner</span></div>
                     <h3>Trading Algorithm</h3>
-                    <p>Winner of 3rd Place in Algorithm and Planning categories. Developed high-performance computational strategies to solve complex trading challenges.</p>
-                    <a href="https://github.com/MrMarquito" class="btn-github"><i class="fab fa-github"></i> View Repo</a>
+                    <p>Secured 3rd Place overall in an intense collegiate algorithmic programming competition. Engineered a highly efficient engine to solve complex quantitative trading challenges with low-latency execution.</p>
+                    <a href="https://github.com/MrMarquito" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
             <div class="project-card">
-                <div class="project-media">
-                    <div style="color:#555">Video/Image Placeholder</div>
-                </div>
                 <div class="project-info">
                     <div class="project-tags"><span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">REST API</span></div>
                     <h3>E-Commerce & Chat Suite</h3>
-                    <p>A cross-platform mobile application featuring real-time chat, product filtering, and dynamic state management via external APIs.</p>
-                    <a href="https://github.com/MrMarquito/e_commerce" class="btn-github"><i class="fab fa-github"></i> View Repo</a>
+                    <p>A full-stack cross-platform mobile application combining a dynamic product marketplace with real-time user messaging, utilizing external APIs and complex state management.</p>
+                    <a href="https://github.com/MrMarquito/e_commerce" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
             <div class="project-card">
-                <div class="project-media">
-                    <div style="color:#555">Video/Image Placeholder</div>
-                </div>
                 <div class="project-info">
-                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">OOP</span></div>
+                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">Physics/Math</span> <span class="tag">OOP</span></div>
                     <h3>2D Physics Sandbox</h3>
-                    <p>A gravitational simulation engine that models object interaction, elastic collisions, and mass-based movement in a 2D environment.</p>
-                    <a href="https://github.com/MrMarquito/2DPhysicsSandbox" class="btn-github"><i class="fab fa-github"></i> View Repo</a>
+                    <p>Built a custom physics simulation engine from the ground up that models complex object interaction, elastic collisions, and gravitational pull based on precise mathematical parameters.</p>
+                    <a href="https://github.com/MrMarquito/2DPhysicsSandbox" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-info">
+                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">System Design</span></div>
+                    <h3>Inventory Management System</h3>
+                    <p>Developed an enterprise-style architecture for local business logic, allowing for seamless tracking, updating, and manipulation of large-scale inventory data structures.</p>
+                    <a href="https://github.com/MrMarquito/InventoryManagement" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <section class="skills-sec">
-        <h2>Technical Toolkit</h2>
+    <section id="skills" class="skills-sec">
+        <h2 class="section-title">Technical Arsenal</h2>
         <div class="skill-badges">
-            <div class="badge">Swift (Certified)</div>
-            <div class="badge">Flutter / Dart</div>
-            <div class="badge">Java</div>
-            <div class="badge">C++ / C</div>
-            <div class="badge">Python</div>
-            <div class="badge">Linux</div>
-            <div class="badge">Salesforce CRM</div>
+            <div class="badge"><i class="fab fa-apple"></i> Swift (Certified)</div>
+            <div class="badge" style="color: #54C5F8;"><i class="fab fa-flutter"></i> Flutter & Dart</div>
+            <div class="badge" style="color: #f89820;"><i class="fab fa-java"></i> Java</div>
+            <div class="badge" style="color: #659ad2;">C++ / C</div>
+            <div class="badge" style="color: #FFD43B;"><i class="fab fa-python"></i> Python</div>
+            <div class="badge">RESTful APIs</div>
+            <div class="badge"><i class="fab fa-linux"></i> Linux OS</div>
+            <div class="badge"><i class="fab fa-salesforce"></i> Salesforce CRM</div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Marcos Cruz Bazan | Hialeah, FL | <a href="mailto:m.cruzbazan02@gmail.com" style="color:var(--primary)">Email Me</a></p>
+        <p>&copy; 2026 Marcos Cruz Bazan | Built with passion in Hialeah, FL.</p>
     </footer>
 </div>
+
+<script>
+    // 1. Particle Network Background
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    let width, height, particles;
+
+    function init() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        particles = [];
+        const numParticles = Math.min(Math.floor(window.innerWidth / 15), 100);
+        
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 2 + 1
+            });
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, width, height);
+        
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.5)';
+        ctx.lineWidth = 0.5;
+
+        for (let i = 0; i < particles.length; i++) {
+            let p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw connections
+            for (let j = i + 1; j < particles.length; j++) {
+                let p2 = particles[j];
+                let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
+                
+                if (dist < 120) {
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${1 - dist/120})`;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    animate();
+
+    // 2. Scroll Animation Observer for Cards
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.project-card').forEach(card => {
+        observer.observe(card);
+    });
+</script>
 
 </body>
 </html>
