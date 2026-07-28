@@ -21,6 +21,3 @@ You can view the live website here: [https://mrmarquito.github.io/](https://mrma
 ├── index.html         # Main website structure & styling
 └── README.md          # Project documentation
 ```
-
-## 🤝 Contact
-* **GitHub**: [@MrMarquito](https://github.com/MrMarquito)
