@@ -3,30 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcos Cruz Bazan | Software Engineer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Marcos Cruz Bazan | Systems & Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            /* Deep Purple Theme */
-            --primary: #a855f7; 
-            --primary-glow: rgba(168, 85, 247, 0.5);
-            --bg-dark: #0b0514; 
-            --bg-card: rgba(35, 20, 55, 0.6);
-            --text-main: #f8fafc;
-            --text-dim: #cbd5e1;
+            --bg-void: #06070a;
+            --bg-surface: rgba(13, 17, 26, 0.75);
+            --bg-surface-active: rgba(18, 24, 38, 0.95);
+            --border-dim: rgba(0, 240, 255, 0.15);
+            --border-bright: #00f0ff;
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff0055;
+            --neon-purple: #9d4edd;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.35);
+            --magenta-glow: 0 0 20px rgba(255, 0, 85, 0.35);
+            --font-display: 'Rajdhani', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Space Grotesk', sans-serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            font-family: var(--font-body);
+            background-color: var(--bg-void);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* Canvas Background */
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -34,179 +48,374 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
+            pointer-events: none;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* Glassmorphism Nav */
+        /* HUD Navigation */
         nav {
-            padding: 1.5rem 20px;
+            padding: 1.25rem 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(11, 5, 20, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(6, 7, 10, 0.85);
+            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            border-bottom: 1px solid var(--border-dim);
         }
-        
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo span { color: var(--neon-cyan); text-shadow: var(--cyan-glow); }
+        .logo-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--neon-magenta);
+            border: 1px solid var(--neon-magenta);
+            padding: 1px 6px;
+            margin-left: 6px;
+        }
+
         .nav-links a {
-            color: var(--text-main);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
             text-decoration: none;
-            margin-left: 25px;
-            font-weight: 500;
-            transition: color 0.3s;
+            margin-left: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
         }
-        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
 
-        /* Hero Section */
-        .hero { padding: 120px 0 80px; text-align: center; }
-        .hero h1 { font-size: 4rem; margin-bottom: 10px; color: #fff; letter-spacing: -1px; }
-        .hero h1 span { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
-        .hero p { font-size: 1.25rem; color: var(--text-dim); max-width: 750px; margin: 0 auto 30px; }
-        
+        .nav-links a:hover {
+            color: var(--neon-cyan);
+            text-shadow: var(--cyan-glow);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 130px 0 90px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid var(--border-dim);
+            padding: 6px 16px;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--neon-cyan);
+            filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.4));
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 780px;
+            margin: 0 auto 34px;
+            line-height: 1.7;
+        }
+
         .social-links a {
-            color: var(--text-main);
-            font-size: 1.5rem;
-            margin: 0 15px;
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            margin: 0 14px;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border-dim);
+            background: rgba(255, 255, 255, 0.02);
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
         }
-        .social-links a:hover { color: var(--primary); transform: translateY(-3px); text-shadow: 0 0 10px var(--primary-glow); }
 
-        /* Section Headers */
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
+        .social-links a:hover {
+            color: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+            box-shadow: var(--cyan-glow);
+            transform: translateY(-3px);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-family: var(--font-display);
+            text-align: center;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 55px;
+            position: relative;
+        }
+
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--primary);
-            margin: 10px auto 0;
-            border-radius: 2px;
-            box-shadow: 0 0 10px var(--primary-glow);
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+            margin: 12px auto 0;
+            box-shadow: var(--cyan-glow);
         }
 
-        /* Project Grid */
-        .projects-section { padding: 80px 0; }
+        /* Project Cards */
+        .projects-section { padding: 60px 0 100px; }
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 28px;
         }
 
-        /* Interactive Cards */
         .project-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            opacity: 0;
-            transform: translateY(30px);
+            background: var(--bg-surface);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-dim);
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
-            min-height: 280px;
+            min-height: 340px;
             cursor: pointer;
-        }
-        
-        .project-card.show { opacity: 1; transform: translateY(0); }
-        .project-card:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            border-color: rgba(168, 85, 247, 0.6);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 20px rgba(168, 85, 247, 0.2);
+            opacity: 0;
+            transform: translateY(25px);
         }
 
-        /* Card Front (Always Visible) */
+        .project-card.show { opacity: 1; transform: translateY(0); }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover, .project-card.active {
+            background: var(--bg-surface-active);
+            border-color: rgba(0, 240, 255, 0.6);
+            transform: translateY(-8px);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7), var(--cyan-glow);
+        }
+
+        .project-card:hover::before, .project-card.active::before { opacity: 1; }
+
         .card-front {
-            padding: 40px 30px;
+            padding: 34px 28px;
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            justify-content: space-between;
         }
 
-        .card-front h3 { margin-bottom: 15px; font-size: 1.5rem; color: #fff; line-height: 1.3; }
-        .project-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
-        .tag {
-            font-size: 0.75rem;
-            background: rgba(168, 85, 247, 0.15);
-            padding: 5px 12px;
-            border-radius: 20px;
-            color: #e9d5ff;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            font-weight: bold;
-        }
-        
-        .hover-hint {
-            font-size: 0.85rem;
-            color: var(--primary);
-            opacity: 0.8;
-            margin-top: 10px;
+        .card-header {
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: space-between;
+            margin-bottom: 18px;
         }
 
-        /* Card Overlay (Shows on Hover/Click) */
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--neon-cyan);
+            filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+        }
+
+        .card-sys {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+        }
+
+        .card-front h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+            line-height: 1.25;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            background: rgba(0, 240, 255, 0.06);
+            padding: 4px 10px;
+            color: var(--neon-cyan);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            letter-spacing: 0.5px;
+        }
+
+        .hover-hint {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Overlay */
         .card-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 8, 25, 0.96);
+            background: rgba(8, 11, 18, 0.97);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 25px;
-            text-align: center;
+            justify-content: space-between;
+            padding: 30px;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease-in-out;
-            border-radius: 15px;
+            transform: translateY(15px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
         }
 
-        /* Trigger overlay on hover OR when clicked (for mobile) */
         .project-card:hover .card-overlay,
         .project-card.active .card-overlay {
             opacity: 1;
             transform: translateY(0);
+            pointer-events: auto;
         }
 
-        .card-overlay p { color: var(--text-dim); margin-bottom: 15px; font-size: 0.9rem; line-height: 1.5; }
+        .card-overlay p {
+            color: var(--text-primary);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
 
-        .btn-github {
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .btn-cyber {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
-            background: rgba(168, 85, 247, 0.1);
-            color: #fff;
+            padding: 9px 18px;
+            background: rgba(0, 240, 255, 0.08);
+            color: var(--neon-cyan);
             text-decoration: none;
-            border-radius: 8px;
-            border: 1px solid var(--primary);
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            font-weight: bold;
+            border: 1px solid var(--neon-cyan);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            transition: all 0.25s ease;
         }
-        .btn-github:hover { background: var(--primary); color: #000; box-shadow: 0 0 15px var(--primary-glow); }
+
+        .btn-cyber:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: var(--cyan-glow);
+        }
+
+        .btn-cyber.secondary {
+            border-color: var(--neon-magenta);
+            color: var(--neon-magenta);
+            background: rgba(255, 0, 85, 0.08);
+        }
+
+        .btn-cyber.secondary:hover {
+            background: var(--neon-magenta);
+            color: #fff;
+            box-shadow: var(--magenta-glow);
+        }
 
         /* Skills */
-        .skills-sec { padding: 60px 0 100px; text-align: center; }
-        .skill-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; max-width: 900px; margin: 0 auto; }
-        .badge { 
-            background: rgba(255,255,255,0.03); 
-            padding: 12px 25px; 
-            border-radius: 50px; 
-            border: 1px solid rgba(168, 85, 247, 0.2);
-            font-weight: 500;
-            transition: all 0.3s ease;
+        .skills-sec { padding: 40px 0 110px; text-align: center; }
+        .skill-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            max-width: 960px;
+            margin: 0 auto;
         }
-        .badge:hover { background: rgba(168, 85, 247, 0.15); border-color: var(--primary); transform: scale(1.05); box-shadow: 0 0 15px rgba(168,85,247,0.3); }
 
-        footer { text-align: center; padding: 30px; border-top: 1px solid rgba(168, 85, 247, 0.2); color: var(--text-dim); font-size: 0.9rem; }
+        .badge {
+            background: rgba(13, 17, 26, 0.8);
+            padding: 10px 20px;
+            border: 1px solid var(--border-dim);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            transition: all 0.25s ease;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+        }
+
+        .badge:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            border-top: 1px solid var(--border-dim);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
@@ -214,103 +423,221 @@
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-    <div style="font-weight: bold; font-size: 1.5rem; letter-spacing: 1px;">MC<span style="color:var(--primary)">.</span></div>
+    <div class="logo">MC<span>.</span><span class="logo-tag">DEV//SEC</span></div>
     <div class="nav-links">
-        <a href="#projects">Work</a>
-        <a href="#skills">Skills</a>
-        <a href="mailto:m.cruzbazan02@gmail.com">Contact</a>
+        <a href="#projects">// Works</a>
+        <a href="#skills">// Arsenal</a>
+        <a href="mailto:m.cruzbazan02@gmail.com">// Transmit</a>
     </div>
 </nav>
 
 <div class="container">
     <section class="hero">
+        <div class="hero-badge"><i class="fas fa-terminal"></i> CORE SYSTEM // ONLINE</div>
         <h1>Marcos <span>Cruz Bazan</span></h1>
-        <p>Computer Science Student at FIU & Certified Swift Developer specializing in full-stack architecture, low-latency computational algorithms, and scalable cross-platform solutions.</p>
+        <p>Computer Science Scholar at FIU & Certified Swift Developer. Engineering low-latency networking architectures, scalable full-stack platforms, and explainable Machine Learning systems.</p>
         <div class="social-links">
-            <a href="https://github.com/MrMarquito" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/marcos-antonio-cruz-bazan" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/MrMarquito" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/marcos-antonio-cruz-bazan" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
         </div>
     </section>
 
     <section id="projects" class="projects-section">
-        <h2 class="section-title">Selected Works</h2>
+        <h2 class="section-title">Deployed Systems</h2>
         <div class="project-grid">
 
-            <!-- NEW JPMORGAN CHASE PROJECT -->
+            <!-- TruthScore -->
             <div class="project-card" onclick="this.classList.toggle('active')">
                 <div class="card-front">
-                    <h3>JPMorgan Chase & Co.<br>TruthScore Architecture</h3>
-                    <div class="project-tags"><span class="tag">Full-Stack</span> <span class="tag">Machine Learning</span> <span class="tag">IAM Security</span></div>
-                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
-                </div>
-                <div class="card-overlay">
-                    <p>Engineered an end-to-end IAM risk-scoring platform featuring automated data modeling pipelines, real-time context-aware signal evaluation, and a transparent rule-based algorithm scaling into a lightweight Machine Learning model with Explainable AI (XAI) descriptions.</p>
-                    <a href="https://github.com/MrMarquito/Capstone-2-TruthScore" class="btn-github"><i class="fab fa-github"></i> Architecture Overview</a>
-                </div>
-            </div>
-
-           <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <h3>Recipe App</h3>
-                    <div class="project-tags">
-                        <span class="tag">Flutter</span> 
-                        <span class="tag">Dart</span> 
-                        <span class="tag">Spoonacular API</span>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-shield-halved card-icon"></i>
+                            <span class="card-sys">IAM_01</span>
+                        </div>
+                        <h3>TruthScore</h3>
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Node/Hono</span>
+                            <span class="tag">Random Forest</span>
+                            <span class="tag">Azure SQL</span>
+                        </div>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
                 </div>
                 <div class="card-overlay">
-                    <p>A Flutter recipe browsing application featuring infinite scroll, typo-tolerant search, and advanced filtering. Implements local data persistence using shared_preferences for offline functionality.</p>
-                    <a href="https://github.com/MrMarquito/recipe-app" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-fingerprint card-icon"></i>
+                            <span class="card-sys">ZERO_TRUST</span>
+                        </div>
+                        <p>Dynamic, context-aware access-risk scoring engine[cite: 2]. Evaluates real-time telemetry (device posture, IP trust, peer baseline anomalies) via Random Forest and Isolation Forest models to yield explainable 0–100 risk metrics and automated adjudication (Allow / MFA / Review / Block)[cite: 2].</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://mrmarquito.github.io/TruthScore/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+                        <a href="https://github.com/MrMarquito/TruthScore" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                    </div>
                 </div>
             </div>
 
-
+            <!-- Recipe App -->
             <div class="project-card" onclick="this.classList.toggle('active')">
                 <div class="card-front">
-                    <h3>E-Commerce & Chat Suite</h3>
-                    <div class="project-tags"><span class="tag">Flutter</span> <span class="tag">Dart</span> <span class="tag">REST API</span></div>
-                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-utensils card-icon"></i>
+                            <span class="card-sys">CLIENT_02</span>
+                        </div>
+                        <h3>Culinary Engine</h3>
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">Dart</span>
+                            <span class="tag">Spoonacular API</span>
+                            <span class="tag">Offline State</span>
+                        </div>
+                    </div>
+                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
                 </div>
                 <div class="card-overlay">
-                    <p>Architected a full-stack cross-platform mobile application combining a dynamic product marketplace with real-time text messaging systems, utilizing complex asynchronous state management architectures and secure external RESTful API endpoints.</p>
-                    <a href="https://github.com/MrMarquito/e_commerce" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-bowl-rice card-icon"></i>
+                            <span class="card-sys">CACHING</span>
+                        </div>
+                        <p>Cross-platform culinary discovery client featuring infinite scroll pagination, typo-tolerant heuristic queries, and granular dietary filtering. Leverages asynchronous client-side state caching with shared_preferences for continuous offline operation.</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://github.com/MrMarquito/recipe-app" target="_blank" class="btn-cyber"><i class="fab fa-github"></i> Repository</a>
+                    </div>
                 </div>
             </div>
 
+            <!-- GeekText RESTful API -->
             <div class="project-card" onclick="this.classList.toggle('active')">
                 <div class="card-front">
-                    <h3>2D Physics Sandbox Engine</h3>
-                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">Physics Engine</span> <span class="tag">OOP</span></div>
-                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-server card-icon"></i>
+                            <span class="card-sys">API_03</span>
+                        </div>
+                        <h3>GeekText RESTful API</h3>
+                        <div class="project-tags">
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">SQLAlchemy</span>
+                            <span class="tag">SQLite</span>
+                            <span class="tag">Flutter Web</span>
+                        </div>
+                    </div>
+                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
                 </div>
                 <div class="card-overlay">
-                    <p>Built a custom 2D simulation physics framework from the ground up utilizing strict Object-Oriented Programming (OOP) paradigms to model elastic object interactions, live gravitational vectors, and accurate collision matrices.</p>
-                    <a href="https://github.com/TRI-ADIC/arena-shooter-capstone-i" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-database card-icon"></i>
+                            <span class="card-sys">ORM_DATA</span>
+                        </div>
+                        <p>High-throughput bookstore architecture optimized for technical and speculative fiction domains. Combines an asynchronous Python FastAPI service and SQLAlchemy ORM backend with a responsive Flutter Web management client.</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://mrmarquito.github.io/cen4010-geektext-api/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Demo</a>
+                        <a href="https://github.com/MrMarquito/cen4010-geektext-api" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                    </div>
                 </div>
             </div>
 
+            <!-- FleetFlow -->
             <div class="project-card" onclick="this.classList.toggle('active')">
                 <div class="card-front">
-                    <h3>Enterprise Inventory System</h3>
-                    <div class="project-tags"><span class="tag">Java</span> <span class="tag">System Design</span> <span class="tag">Data Structures</span></div>
-                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-truck-fast card-icon"></i>
+                            <span class="card-sys">SIM_04</span>
+                        </div>
+                        <h3>FleetFlow Logistics</h3>
+                        <div class="project-tags">
+                            <span class="tag">C++</span>
+                            <span class="tag">Physics Simulation</span>
+                            <span class="tag">Spatial Routing</span>
+                        </div>
+                    </div>
+                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
                 </div>
                 <div class="card-overlay">
-                    <p>Developed an enterprise-style system architecture specialized for local business logic tracking, enabling fast updates, searching, and structural manipulations of massive inventory data points.</p>
-                    <a href="https://github.com/MrMarquito/InventoryManagement" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-route card-icon"></i>
+                            <span class="card-sys">TELEMETRY</span>
+                        </div>
+                        <p>Spatial logistics and tracking simulation framework. Implements object-oriented kinematic physics and autonomous dispatching routines to model real-time vehicle trajectories, drone deliveries, and supply-chain congestion.</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://mrmarquito.github.io/fleet-flow/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Demo</a>
+                        <a href="https://github.com/MrMarquito/fleet-flow" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                    </div>
                 </div>
             </div>
 
+            <!-- Low-Level FTP Client -->
             <div class="project-card" onclick="this.classList.toggle('active')">
                 <div class="card-front">
-                    <h3>Asynchronous Weather App</h3>
-                    <div class="project-tags"><span class="tag">Flutter</span> <span class="tag">Python</span> <span class="tag">Async Data</span></div>
-                    <span class="hover-hint"><i class="fas fa-hand-pointer"></i> Tap to read</span>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-network-wired card-icon"></i>
+                            <span class="card-sys">NET_05</span>
+                        </div>
+                        <h3>Socket FTP Client</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Raw Sockets</span>
+                            <span class="tag">RFC 959</span>
+                            <span class="tag">TCP/IP</span>
+                        </div>
+                    </div>
+                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
                 </div>
                 <div class="card-overlay">
-                    <p>A sleek mobile platform that systematically fetches, parses, and visually delivers real-time meteorological JSON records by establishing secure requests to third-party endpoints backed by a custom Python processing layer.</p>
-                    <a href="https://github.com/MrMarquito/WeatherYT" class="btn-github"><i class="fab fa-github"></i> Source Code</a>
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-ethernet card-icon"></i>
+                            <span class="card-sys">LOW_LEVEL</span>
+                        </div>
+                        <p>Bare-metal RFC 959 FTP protocol client engineered in Python without high-level networking wrappers. Directly handles TCP handshakes, dynamic passive mode (PASV) bit-shifting and port calculation, and raw byte-stream transmissions.</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://github.com/MrMarquito/CNT-Project-1" target="_blank" class="btn-cyber"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SchemaFlow -->
+            <div class="project-card" onclick="this.classList.toggle('active')">
+                <div class="card-front">
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-diagram-project card-icon"></i>
+                            <span class="card-sys">TOOL_06</span>
+                        </div>
+                        <h3>SchemaFlow Studio</h3>
+                        <div class="project-tags">
+                            <span class="tag">Flutter Web</span>
+                            <span class="tag">Interactive Canvas</span>
+                            <span class="tag">DDL Generator</span>
+                        </div>
+                    </div>
+                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                </div>
+                <div class="card-overlay">
+                    <div>
+                        <div class="card-header">
+                            <i class="fas fa-sitemap card-icon"></i>
+                            <span class="card-sys">DATA_DESIGN</span>
+                        </div>
+                        <p>Visual Entity-Relationship Studio built natively in Flutter Web. Features an interactive node-graph canvas to construct entity models, manage foreign-key constraints, and generate standardized SQL DDL schema files in real time.</p>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://mrmarquito.github.io/SchemaFlow/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Launch App</a>
+                        <a href="https://github.com/MrMarquito/SchemaFlow" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                    </div>
                 </div>
             </div>
 
@@ -320,46 +647,45 @@
     <section id="skills" class="skills-sec">
         <h2 class="section-title">Technical Arsenal</h2>
         <div class="skill-badges">
-            <div class="badge" style="color: #fff;"><i class="fab fa-apple"></i> Swift (Certified)</div>
-            <div class="badge" style="color: #54C5F8;"><i class="fab fa-flutter"></i> Flutter & Dart</div>
-            <div class="badge" style="color: #f89820;"><i class="fab fa-java"></i> Java</div>
-            <div class="badge" style="color: #659ad2;">C++ / C</div>
-            <div class="badge" style="color: #FFD43B;"><i class="fab fa-python"></i> Python</div>
-            <div class="badge">Full-Stack Architecture</div>
-            <div class="badge">Explainable AI / ML</div>
-            <div class="badge">Data Modeling Pipelines</div>
-            <div class="badge">RESTful APIs</div>
-            <div class="badge">Relational Databases</div>
-            <div class="badge"><i class="fab fa-linux"></i> Linux OS</div>
-            <div class="badge" style="color: #00a1e0;"><i class="fab fa-salesforce"></i> Salesforce CRM</div>
+            <div class="badge"><i class="fab fa-apple" style="color: #fff;"></i> Swift (Certified)</div>
+            <div class="badge"><i class="fab fa-flutter" style="color: #00f0ff;"></i> Flutter & Dart</div>
+            <div class="badge"><i class="fab fa-python" style="color: #ffd43b;"></i> Python</div>
+            <div class="badge"><i class="fas fa-code" style="color: #659ad2;"></i> C++ / C</div>
+            <div class="badge"><i class="fab fa-java" style="color: #f89820;"></i> Java</div>
+            <div class="badge"><i class="fas fa-microchip" style="color: #ff0055;"></i> Scikit-Learn (RF/IF)</div>
+            <div class="badge"><i class="fas fa-shield-virus" style="color: #00f0ff;"></i> Zero-Trust IAM & XAI</div>
+            <div class="badge"><i class="fas fa-network-wired" style="color: #9d4edd;"></i> Socket Networking (TCP/IP)</div>
+            <div class="badge"><i class="fas fa-database" style="color: #00f0ff;"></i> SQL Server / Azure SQL / SQLite</div>
+            <div class="badge"><i class="fab fa-node-js" style="color: #68a063;"></i> Node.js & Hono API</div>
+            <div class="badge"><i class="fab fa-docker" style="color: #2496ed;"></i> Docker Compose</div>
+            <div class="badge"><i class="fab fa-linux" style="color: #fff;"></i> Linux Environments</div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Marcos Cruz Bazan | Built with passion in Hialeah, FL.</p>
+        <p>&copy; 2026 Marcos Cruz Bazan // Engineered in Florida // All signals operational.</p>
     </footer>
 </div>
 
 <script>
-    // 1. Particle Network Background (Updated to Purple Theme)
+    // Cyberpunk Neon Node Network Canvas
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
-    
     let width, height, particles;
 
     function init() {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
         particles = [];
-        const numParticles = Math.min(Math.floor(window.innerWidth / 15), 100);
-        
+        const numParticles = Math.min(Math.floor(window.innerWidth / 18), 80);
+
         for (let i = 0; i < numParticles; i++) {
             particles.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 2 + 1
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
+                radius: Math.random() * 1.5 + 0.8
             });
         }
     }
@@ -367,10 +693,6 @@
     function animate() {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, width, height);
-        
-        // Purple particles
-        ctx.fillStyle = 'rgba(168, 85, 247, 0.5)';
-        ctx.lineWidth = 0.5;
 
         for (let i = 0; i < particles.length; i++) {
             let p = particles[i];
@@ -380,17 +702,18 @@
             if (p.x < 0 || p.x > width) p.vx *= -1;
             if (p.y < 0 || p.y > height) p.vy *= -1;
 
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.45)';
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fill();
 
-            // Draw connections with purple gradient
             for (let j = i + 1; j < particles.length; j++) {
                 let p2 = particles[j];
-                let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
-                
-                if (dist < 120) {
-                    ctx.strokeStyle = `rgba(168, 85, 247, ${1 - dist/120})`;
+                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+
+                if (dist < 110) {
+                    ctx.strokeStyle = `rgba(0, 240, 255, ${0.25 * (1 - dist / 110)})`;
+                    ctx.lineWidth = 0.6;
                     ctx.beginPath();
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(p2.x, p2.y);
@@ -404,8 +727,7 @@
     init();
     animate();
 
-    // 2. Scroll Animation Observer for Cards
-    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -413,11 +735,9 @@
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
 
-    document.querySelectorAll('.project-card').forEach(card => {
-        observer.observe(card);
-    });
+    document.querySelectorAll('.project-card').forEach(card => observer.observe(card));
 </script>
 
 </body>
