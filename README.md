@@ -1,23 +1,44 @@
-# Personal Portfolio Website
+# Marcos Cruz Bazan // Portfolio Terminal
 
-Welcome to the repository for my personal portfolio website! This site serves as a centralized hub to showcase my software engineering background, featured projects, technical skillset, and professional journey.
+A high-performance personal portfolio built with a futuristic cyberpunk HUD aesthetic, designed to showcase systems engineering, low-latency architectures, and cross-platform applications.
 
-## 🚀 Live Demo
-You can view the live website here: [https://mrmarquito.github.io/](https://mrmarquito.github.io/)
+Live deployment: **[https://mrmarquito.github.io/](https://mrmarquito.github.io/)**[cite: 3]
 
-## 🎨 Features
-* **Modern Deep Purple Aesthetic**: Built with a sleek, glowing dark mode interface.
-* **Fully Responsive**: Optimized for seamless viewing across smartphones, tablets, and desktops.
-* **Component Styling**: Crafted using native CSS variables (`:root`) for easy theme customization and consistent styling.
-* **Interactive UI Elements**: Clean typography and layout structures designed for quick scannability.
-* **FontAwesome Integration**: Embedded high-quality developer and social media icons.
+---
 
-## 🛠️ Built With
-* **HTML5**: Semantic elements for better accessibility and SEO.
-* **CSS3**: Custom properties, Flexbox/Grid, and responsive media queries.
+## Architecture & Visual Features
 
-## 📁 Repository Structure
+* **Cyberpunk HUD Interface:** Styled with neon cyan (`#00f0ff`) and electric magenta accents, chamfered polygon clip-path borders, and a subtle scanline grid backdrop.
+* **Interactive Canvas Particle Engine:** Built with vanilla JavaScript on the HTML5 Canvas API to render real-time, responsive node-network particle trajectories.
+* **Dual-State Telemetry Cards:** Interactive project cards utilizing CSS transforms and responsive touch-detection (`IntersectionObserver` and click/hover overlays) for desktop and mobile displays.
+* **Typographic Hierarchy:** Combines *Rajdhani* (display titles), *JetBrains Mono* (telemetry, tags, status indicators), and *Space Grotesk* (body copy).
+* **Zero External JS Frameworks:** Implemented entirely in semantic HTML5, modern CSS3 (Custom Properties, Grid, Flexbox), and native ES6+ JavaScript without third-party library overhead.
+
+---
+
+## Featured Systems
+
+| System | Architecture & Stack | Focus Area |
+| :--- | :--- | :--- |
+| **TruthScore** | Flutter, FastAPI, Node/Hono, Azure SQL, Scikit-Learn[cite: 2] | Dynamic zero-trust IAM risk scoring and Explainable AI (XAI)[cite: 2] |
+| **Culinary Engine** | Flutter, Dart, Spoonacular API, `shared_preferences` | Heuristic search, infinite pagination, and client-side offline caching |
+| **GeekText RESTful API** | FastAPI, SQLAlchemy, SQLite, Flutter Web | High-throughput bookstore API and ORM database design |
+| **FleetFlow Logistics** | C++, Object-Oriented Kinematics | Kinematic vehicle simulation and spatial trajectory modeling |
+| **Socket FTP Client** | Python, Raw BSD Sockets, RFC 959 | Low-level TCP handshake handling, PASV bit-shifting, and packet transmission |
+| **SchemaFlow Studio** | Flutter Web, Interactive Canvas | Visual entity-relationship modeling and real-time SQL DDL generation |
+
+---
+
+## Tech Stack
+
+* **Core:** Semantic HTML5, CSS3, Vanilla JavaScript (Canvas API, DOM API, Intersection Observer API)
+* **Design Systems:** CSS Custom Properties (`:root`), Chamfered Clip-Paths, Glassmorphism, CSS Grid & Flexbox
+* **Typography & Assets:** Google Fonts (*Rajdhani*, *JetBrains Mono*, *Space Grotesk*), FontAwesome 6.5.1
+
+---
+
+## Repository Structure
+
 ```text
-├── index.html         # Main website structure & styling
+├── index.html         # Complete single-page portfolio, styles, and canvas scripts
 └── README.md          # Project documentation
-```
