@@ -3,640 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcos Cruz Bazan | Systems & Software Engineer</title>
+    <title>Marcos A. Cruz Bazan | Systems & Software Engineer</title>
+    <meta name="description" content="Systems and Software Engineer specializing in low-latency networks, zero-trust IAM telemetry, and cross-platform architectures.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --bg-void: #06070a;
-            --bg-surface: rgba(13, 17, 26, 0.75);
-            --bg-surface-active: rgba(18, 24, 38, 0.95);
-            --border-dim: rgba(0, 240, 255, 0.15);
-            --border-bright: #00f0ff;
-            --neon-cyan: #00f0ff;
-            --neon-magenta: #ff0055;
-            --neon-purple: #9d4edd;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.35);
-            --magenta-glow: 0 0 20px rgba(255, 0, 85, 0.35);
-            --font-display: 'Rajdhani', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-body: 'Space Grotesk', sans-serif;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-void);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: 
-                linear-gradient(to right, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* HUD Navigation */
-        nav {
-            padding: 1.25rem 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(6, 7, 10, 0.85);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border-dim);
-        }
-
-        .logo {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.6rem;
-            letter-spacing: 2px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .logo span { color: var(--neon-cyan); text-shadow: var(--cyan-glow); }
-        .logo-tag {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--neon-magenta);
-            border: 1px solid var(--neon-magenta);
-            padding: 1px 6px;
-            margin-left: 6px;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            text-decoration: none;
-            margin-left: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.25s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--neon-cyan);
-            text-shadow: var(--cyan-glow);
-        }
-
-        /* Hero */
-        .hero {
-            padding: 130px 0 90px;
-            text-align: center;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--neon-cyan);
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid var(--border-dim);
-            padding: 6px 16px;
-            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
-            margin-bottom: 24px;
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: 4.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.05;
-            margin-bottom: 18px;
-        }
-
-        .hero h1 span {
-            color: transparent;
-            -webkit-text-stroke: 1.5px var(--neon-cyan);
-            filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.4));
-        }
-
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 780px;
-            margin: 0 auto 34px;
-            line-height: 1.7;
-        }
-
-        .social-links a {
-            color: var(--text-secondary);
-            font-size: 1.3rem;
-            margin: 0 14px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border: 1px solid var(--border-dim);
-            background: rgba(255, 255, 255, 0.02);
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-        }
-
-        .social-links a:hover {
-            color: var(--neon-cyan);
-            border-color: var(--neon-cyan);
-            box-shadow: var(--cyan-glow);
-            transform: translateY(-3px);
-        }
-
-        /* Section Title */
-        .section-title {
-            font-family: var(--font-display);
-            text-align: center;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 55px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
-            margin: 12px auto 0;
-            box-shadow: var(--cyan-glow);
-        }
-
-        /* Project Cards */
-        .projects-section { padding: 60px 0 100px; }
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 28px;
-        }
-
-        .project-card {
-            background: var(--bg-surface);
-            backdrop-filter: blur(14px);
-            border: 1px solid var(--border-dim);
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            min-height: 340px;
-            cursor: pointer;
-            opacity: 0;
-            transform: translateY(25px);
-        }
-
-        .project-card.show { opacity: 1; transform: translateY(0); }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .project-card:hover, .project-card.active {
-            background: var(--bg-surface-active);
-            border-color: rgba(0, 240, 255, 0.6);
-            transform: translateY(-8px);
-            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.7), var(--cyan-glow);
-        }
-
-        .project-card:hover::before, .project-card.active::before { opacity: 1; }
-
-        .card-front {
-            padding: 34px 28px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 18px;
-        }
-
-        .card-icon {
-            font-size: 1.8rem;
-            color: var(--neon-cyan);
-            filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
-        }
-
-        .card-sys {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 2px 8px;
-        }
-
-        .card-front h3 {
-            font-family: var(--font-display);
-            font-size: 1.6rem;
-            color: #fff;
-            margin-bottom: 14px;
-            letter-spacing: 0.5px;
-            line-height: 1.25;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
-        .tag {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            background: rgba(0, 240, 255, 0.06);
-            padding: 4px 10px;
-            color: var(--neon-cyan);
-            border: 1px solid rgba(0, 240, 255, 0.25);
-            letter-spacing: 0.5px;
-        }
-
-        .hover-hint {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-transform: uppercase;
-        }
-
-        /* Overlay */
-        .card-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 11, 18, 0.97);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 30px;
-            opacity: 0;
-            transform: translateY(15px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-        }
-
-        .project-card:hover .card-overlay,
-        .project-card.active .card-overlay {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .card-overlay p {
-            color: var(--text-primary);
-            font-size: 0.92rem;
-            line-height: 1.65;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 18px;
-        }
-
-        .btn-cyber {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 18px;
-            background: rgba(0, 240, 255, 0.08);
-            color: var(--neon-cyan);
-            text-decoration: none;
-            border: 1px solid var(--neon-cyan);
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            transition: all 0.25s ease;
-        }
-
-        .btn-cyber:hover {
-            background: var(--neon-cyan);
-            color: #000;
-            box-shadow: var(--cyan-glow);
-        }
-
-        .btn-cyber.secondary {
-            border-color: var(--neon-magenta);
-            color: var(--neon-magenta);
-            background: rgba(255, 0, 85, 0.08);
-        }
-
-        .btn-cyber.secondary:hover {
-            background: var(--neon-magenta);
-            color: #fff;
-            box-shadow: var(--magenta-glow);
-        }
-
-        /* Skills */
-        .skills-sec { padding: 40px 0 110px; text-align: center; }
-        .skill-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .badge {
-            background: rgba(13, 17, 26, 0.8);
-            padding: 10px 20px;
-            border: 1px solid var(--border-dim);
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-            transition: all 0.25s ease;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-        }
-
-        .badge:hover {
-            border-color: var(--neon-cyan);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
-            color: #fff;
-        }
-
-        footer {
-            text-align: center;
-            padding: 35px 20px;
-            border-top: 1px solid var(--border-dim);
-            color: var(--text-secondary);
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 </head>
 <body>
 
 <canvas id="bg-canvas"></canvas>
 
-<nav>
-    <div class="logo">MC<span>.</span><span class="logo-tag">DEV//SEC</span></div>
-    <div class="nav-links">
-        <a href="#projects">// Works</a>
-        <a href="#skills">// Arsenal</a>
-        <a href="mailto:m.cruzbazan02@gmail.com">// Transmit</a>
+<!-- Top Status Bar -->
+<div class="top-status-bar">
+    <div class="container status-bar-inner">
+        <div class="status-left">
+
+        </div>
+        <div class="status-right">
+            <span class="status-item"><i class="fas fa-location-dot"></i> Miami, FL</span>
+            <span class="status-item"><i class="fas fa-clock"></i> <span id="clock-display">UTC 00:00:00</span></span>
+            <button id="audio-toggle-btn" class="audio-btn" title="Toggle interaction sound effects">
+                <i class="fas fa-volume-xmark"></i> SFX: <span id="audio-status">MUTED</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Header Navigation -->
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="#" class="brand">
+            <span class="brand-avatar">MC</span>
+            <div class="brand-info">
+                <span class="brand-name">Marcos A. Cruz Bazan</span>
+                <span class="brand-sub">Systems & Software Engineer</span>
+            </div>
+        </a>
+
+        <div class="nav-links">
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#skills" class="nav-link">Technical Arsenal</a>
+            <a href="mailto:m.cruzbazan02@gmail.com" class="nav-btn nav-btn-primary">
+                <i class="fas fa-paper-plane"></i> Contact
+            </a>
+        </div>
     </div>
 </nav>
 
-<div class="container">
-    <section class="hero">
-        <div class="hero-badge"><i class="fas fa-terminal"></i> CORE SYSTEM // ONLINE</div>
-        <h1>Marcos <span>Cruz Bazan</span></h1>
-        <p>Computer Science Scholar at FIU & Certified Swift Developer. Engineering low-latency networking architectures, scalable full-stack platforms, and explainable Machine Learning systems.</p>
-        <div class="social-links">
-            <a href="https://github.com/MrMarquito" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/marcos-antonio-cruz-bazan" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+<main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="about">
+        <h1 class="hero-headline">
+            Engineering low-latency systems, reliable networking, and intelligent infrastructure.
+        </h1>
+        <p class="hero-subline">
+            Apple Certified Swift Developer building high-performance architectures. Experienced across zero-trust IAM risk scoring, raw socket protocol implementations, and production-grade full-stack systems.
+        </p>
+
+        <div class="hero-cta-group">
+            <a href="assets/docs/resume.pdf" target="_blank" class="btn btn-primary">
+                <i class="fas fa-arrow-up-right-from-square"></i> View Resume
+            </a>
+            <a href="https://github.com/MrMarquito" target="_blank" class="btn btn-ghost">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/marcos-antonio-cruz-bazan" target="_blank" class="btn btn-ghost">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
         </div>
     </section>
 
-    <section id="projects" class="projects-section">
-        <h2 class="section-title">Deployed Systems</h2>
-        <div class="project-grid">
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Engineered Systems</h2>
+                <p class="section-subtitle">Key software architectures and production applications</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="filter-group">
+                <button class="filter-chip active" data-filter="all">All Projects</button>
+                <button class="filter-chip" data-filter="systems">Systems & Networks</button>
+                <button class="filter-chip" data-filter="ai">Security & AI</button>
+                <button class="filter-chip" data-filter="apps">Full Stack</button>
+            </div>
+        </div>
+
+        <div class="projects-grid">
 
             <!-- TruthScore -->
-            <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-shield-halved card-icon"></i>
-                            <span class="card-sys">IAM_01</span>
-                        </div>
-                        <h3>TruthScore</h3>
-                        <div class="project-tags">
-                            <span class="tag">Flutter</span>
-                            <span class="tag">FastAPI</span>
-                            <span class="tag">Node/Hono</span>
-                            <span class="tag">Random Forest</span>
-                            <span class="tag">Azure SQL</span>
-                        </div>
+            <div class="project-card" data-category="ai">
+                <div class="card-top">
+                    <div class="card-badges">
+                        <span class="badge badge-accent">Zero-Trust IAM</span>
+                        <span class="badge badge-mono">Explainable AI</span>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                    <h3 class="card-title">TruthScore</h3>
+                    <p class="card-description">
+                        Dynamic, context-aware access-risk evaluation engine. Ingests client-side posture telemetry and evaluates device integrity via Random Forest and Isolation Forest anomaly models to output explainable risk scores (0–100) and enforce automated access adjudication.
+                    </p>
                 </div>
-                <div class="card-overlay">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-fingerprint card-icon"></i>
-                            <span class="card-sys">ZERO_TRUST</span>
-                        </div>
-                        <p>Dynamic, context-aware access-risk scoring engine[cite: 2]. Evaluates real-time telemetry (device posture, IP trust, peer baseline anomalies) via Random Forest and Isolation Forest models to yield explainable 0–100 risk metrics and automated adjudication (Allow / MFA / Review / Block)[cite: 2].</p>
+                <div class="card-bottom">
+                    <div class="tech-stack-row">
+                        <span>Flutter</span>
+                        <span>FastAPI</span>
+                        <span>Node/Hono</span>
+                        <span>Scikit-Learn</span>
+                        <span>Azure SQL</span>
                     </div>
                     <div class="card-actions">
-                        <a href="https://mrmarquito.github.io/TruthScore/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
-                        <a href="https://github.com/MrMarquito/TruthScore" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                        <a href="https://mrmarquito.github.io/TruthScore/" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="fas fa-external-link"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/MrMarquito/TruthScore" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fab fa-github"></i> Source
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Recipe App -->
-            <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-utensils card-icon"></i>
-                            <span class="card-sys">CLIENT_02</span>
-                        </div>
-                        <h3>Culinary Engine</h3>
-                        <div class="project-tags">
-                            <span class="tag">Flutter</span>
-                            <span class="tag">Dart</span>
-                            <span class="tag">Spoonacular API</span>
-                            <span class="tag">Offline State</span>
-                        </div>
+            <!-- Socket FTP Client (With Testbench Modal Trigger) -->
+            <div class="project-card" data-category="systems">
+                <div class="card-top">
+                    <div class="card-badges">
+                        <span class="badge badge-accent">Networking Protocol</span>
+                        <span class="badge badge-mono">RFC 959</span>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                    <h3 class="card-title">Socket FTP Protocol Client</h3>
+                    <p class="card-description">
+                        Low-level implementation of the RFC 959 File Transfer Protocol written directly over raw BSD TCP sockets without high-level networking abstractions. Handles stateful handshakes, passive mode (PASV) bit-shifted port calculation, and binary stream transmission.
+                    </p>
                 </div>
-                <div class="card-overlay">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-bowl-rice card-icon"></i>
-                            <span class="card-sys">CACHING</span>
-                        </div>
-                        <p>Cross-platform culinary discovery client featuring infinite scroll pagination, typo-tolerant heuristic queries, and granular dietary filtering. Leverages asynchronous client-side state caching with shared_preferences for continuous offline operation.</p>
+                <div class="card-bottom">
+                    <div class="tech-stack-row">
+                        <span>Python</span>
+                        <span>Raw BSD Sockets</span>
+                        <span>TCP/IP Handshake</span>
+                        <span>RFC 959</span>
                     </div>
                     <div class="card-actions">
-                        <a href="https://github.com/MrMarquito/recipe-app" target="_blank" class="btn-cyber"><i class="fab fa-github"></i> Repository</a>
+                        <button class="btn btn-sm btn-primary" id="open-testbench-btn">
+                            <i class="fas fa-terminal"></i> Interactive Demo
+                        </button>
+                        <a href="https://github.com/MrMarquito/CNT-Project-1" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fab fa-github"></i> Source
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- GeekText RESTful API -->
-            <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-server card-icon"></i>
-                            <span class="card-sys">API_03</span>
-                        </div>
-                        <h3>GeekText RESTful API</h3>
-                        <div class="project-tags">
-                            <span class="tag">FastAPI</span>
-                            <span class="tag">SQLAlchemy</span>
-                            <span class="tag">SQLite</span>
-                            <span class="tag">Flutter Web</span>
-                        </div>
+            <!-- FleetFlow Logistics -->
+            <div class="project-card" data-category="systems">
+                <div class="card-top">
+                    <div class="card-badges">
+                        <span class="badge badge-accent">Kinematics & SIM</span>
+                        <span class="badge badge-mono">Spatial Routing</span>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                    <h3 class="card-title">FleetFlow Logistics</h3>
+                    <p class="card-description">
+                        Spatial trajectory planning and dispatch simulation framework. Implements object-oriented kinematic physics models in C++ to compute real-time collision-free delivery routing and evaluate logistics bottlenecks across autonomous transit nodes.
+                    </p>
                 </div>
-                <div class="card-overlay">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-database card-icon"></i>
-                            <span class="card-sys">ORM_DATA</span>
-                        </div>
-                        <p>High-throughput bookstore architecture optimized for technical and speculative fiction domains. Combines an asynchronous Python FastAPI service and SQLAlchemy ORM backend with a responsive Flutter Web management client.</p>
+                <div class="card-bottom">
+                    <div class="tech-stack-row">
+                        <span>C++</span>
+                        <span>Kinematic Physics</span>
+                        <span>Autonomous Routing</span>
+                        <span>Algorithms</span>
                     </div>
                     <div class="card-actions">
-                        <a href="https://mrmarquito.github.io/cen4010-geektext-api/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Demo</a>
-                        <a href="https://github.com/MrMarquito/cen4010-geektext-api" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                        <a href="https://mrmarquito.github.io/fleet-flow/" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="fas fa-external-link"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/MrMarquito/fleet-flow" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fab fa-github"></i> Source
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- FleetFlow -->
-            <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-truck-fast card-icon"></i>
-                            <span class="card-sys">SIM_04</span>
-                        </div>
-                        <h3>FleetFlow Logistics</h3>
-                        <div class="project-tags">
-                            <span class="tag">C++</span>
-                            <span class="tag">Physics Simulation</span>
-                            <span class="tag">Spatial Routing</span>
-                        </div>
+            <!-- SchemaFlow Studio -->
+            <div class="project-card" data-category="apps">
+                <div class="card-top">
+                    <div class="card-badges">
+                        <span class="badge badge-accent">Developer Tool</span>
+                        <span class="badge badge-mono">DDL Generator</span>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                    <h3 class="card-title">SchemaFlow Studio</h3>
+                    <p class="card-description">
+                        Interactive Entity-Relationship modeling studio engineered with Flutter Web. Provides an interactive canvas graph to map database topologies, foreign-key relationships, and instantly compile models into production-ready ANSI SQL DDL scripts.
+                    </p>
                 </div>
-                <div class="card-overlay">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-route card-icon"></i>
-                            <span class="card-sys">TELEMETRY</span>
-                        </div>
-                        <p>Spatial logistics and tracking simulation framework. Implements object-oriented kinematic physics and autonomous dispatching routines to model real-time vehicle trajectories, drone deliveries, and supply-chain congestion.</p>
+                <div class="card-bottom">
+                    <div class="tech-stack-row">
+                        <span>Flutter Web</span>
+                        <span>Canvas API</span>
+                        <span>SQL DDL</span>
+                        <span>Graph Modeling</span>
                     </div>
                     <div class="card-actions">
-                        <a href="https://mrmarquito.github.io/fleet-flow/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Demo</a>
-                        <a href="https://github.com/MrMarquito/fleet-flow" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                        <a href="https://mrmarquito.github.io/SchemaFlow/" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="fas fa-external-link"></i> Launch Tool
+                        </a>
+                        <a href="https://github.com/MrMarquito/SchemaFlow" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fab fa-github"></i> Source
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Low-Level FTP Client -->
-            <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-network-wired card-icon"></i>
-                            <span class="card-sys">NET_05</span>
-                        </div>
-                        <h3>Socket FTP Client</h3>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Raw Sockets</span>
-                            <span class="tag">RFC 959</span>
-                            <span class="tag">TCP/IP</span>
-                        </div>
+            <!-- GeekText API -->
+            <div class="project-card" data-category="apps">
+                <div class="card-top">
+                    <div class="card-badges">
+                        <span class="badge badge-accent">Backend REST API</span>
+                        <span class="badge badge-mono">High Throughput</span>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                    <h3 class="card-title">GeekText Bookstore API</h3>
+                    <p class="card-description">
+                        High-throughput bookstore inventory and order processing API. Combines an asynchronous Python FastAPI service and SQLAlchemy ORM backend with robust sanitization routines and a responsive administrative client.
+                    </p>
                 </div>
-                <div class="card-overlay">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-ethernet card-icon"></i>
-                            <span class="card-sys">LOW_LEVEL</span>
-                        </div>
-                        <p>Bare-metal RFC 959 FTP protocol client engineered in Python without high-level networking wrappers. Directly handles TCP handshakes, dynamic passive mode (PASV) bit-shifting and port calculation, and raw byte-stream transmissions.</p>
+                <div class="card-bottom">
+                    <div class="tech-stack-row">
+                        <span>FastAPI</span>
+                        <span>SQLAlchemy</span>
+                        <span>SQLite / PostgreSQL</span>
+                        <span>Flutter Web</span>
                     </div>
                     <div class="card-actions">
-                        <a href="https://github.com/MrMarquito/CNT-Project-1" target="_blank" class="btn-cyber"><i class="fab fa-github"></i> Repository</a>
+                        <a href="https://mrmarquito.github.io/cen4010-geektext-api/" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="fas fa-external-link"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/MrMarquito/cen4010-geektext-api" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fab fa-github"></i> Source
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- SchemaFlow -->
-            <div class="project-card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-diagram-project card-icon"></i>
-                            <span class="card-sys">TOOL_06</span>
-                        </div>
-                        <h3>SchemaFlow Studio</h3>
-                        <div class="project-tags">
-                            <span class="tag">Flutter Web</span>
-                            <span class="tag">Interactive Canvas</span>
-                            <span class="tag">DDL Generator</span>
-                        </div>
+            <!-- Culinary Engine -->
+            <div class="project-card" data-category="apps">
+                <div class="card-top">
+                    <div class="card-badges">
+                        <span class="badge badge-accent">Mobile Client</span>
+                        <span class="badge badge-mono">Offline First</span>
                     </div>
-                    <span class="hover-hint"><i class="fas fa-microchip"></i> Telemetry & Docs</span>
+                    <h3 class="card-title">Culinary Engine</h3>
+                    <p class="card-description">
+                        Cross-platform discovery client featuring infinite scroll pagination, typo-tolerant heuristic queries, and multi-parameter dietary filtering. Implements local caching via shared_preferences for uninterrupted offline operation.
+                    </p>
                 </div>
-                <div class="card-overlay">
-                    <div>
-                        <div class="card-header">
-                            <i class="fas fa-sitemap card-icon"></i>
-                            <span class="card-sys">DATA_DESIGN</span>
-                        </div>
-                        <p>Visual Entity-Relationship Studio built natively in Flutter Web. Features an interactive node-graph canvas to construct entity models, manage foreign-key constraints, and generate standardized SQL DDL schema files in real time.</p>
+                <div class="card-bottom">
+                    <div class="tech-stack-row">
+                        <span>Flutter</span>
+                        <span>Dart</span>
+                        <span>REST Integration</span>
+                        <span>Client Cache</span>
                     </div>
                     <div class="card-actions">
-                        <a href="https://mrmarquito.github.io/SchemaFlow/" target="_blank" class="btn-cyber"><i class="fas fa-arrow-up-right-from-square"></i> Launch App</a>
-                        <a href="https://github.com/MrMarquito/SchemaFlow" target="_blank" class="btn-cyber secondary"><i class="fab fa-github"></i> Source</a>
+                        <a href="https://github.com/MrMarquito/recipe-app" target="_blank" class="btn btn-sm btn-secondary">
+                            <i class="fab fa-github"></i> Repository
+                        </a>
                     </div>
                 </div>
             </div>
@@ -644,101 +277,121 @@
         </div>
     </section>
 
-    <section id="skills" class="skills-sec">
-        <h2 class="section-title">Technical Arsenal</h2>
-        <div class="skill-badges">
-            <div class="badge"><i class="fab fa-apple" style="color: #fff;"></i> Swift (Certified)</div>
-            <div class="badge"><i class="fab fa-flutter" style="color: #00f0ff;"></i> Flutter & Dart</div>
-            <div class="badge"><i class="fab fa-python" style="color: #ffd43b;"></i> Python</div>
-            <div class="badge"><i class="fas fa-code" style="color: #659ad2;"></i> C++ / C</div>
-            <div class="badge"><i class="fab fa-java" style="color: #f89820;"></i> Java</div>
-            <div class="badge"><i class="fas fa-microchip" style="color: #ff0055;"></i> Scikit-Learn (RF/IF)</div>
-            <div class="badge"><i class="fas fa-shield-virus" style="color: #00f0ff;"></i> Zero-Trust IAM & XAI</div>
-            <div class="badge"><i class="fas fa-network-wired" style="color: #9d4edd;"></i> Socket Networking (TCP/IP)</div>
-            <div class="badge"><i class="fas fa-database" style="color: #00f0ff;"></i> SQL Server / Azure SQL / SQLite</div>
-            <div class="badge"><i class="fab fa-node-js" style="color: #68a063;"></i> Node.js & Hono API</div>
-            <div class="badge"><i class="fab fa-docker" style="color: #2496ed;"></i> Docker Compose</div>
-            <div class="badge"><i class="fab fa-linux" style="color: #fff;"></i> Linux Environments</div>
+    <!-- Technical Arsenal / Skills Section -->
+    <section class="skills-section" id="skills">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Technical Arsenal</h2>
+                <p class="section-subtitle">Technologies, frameworks, and verified competencies</p>
+            </div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-category-card">
+                <h4 class="category-heading"><i class="fas fa-code"></i> Languages</h4>
+                <ul class="skills-list">
+                    <li><i class="fab fa-apple"></i> Swift (Apple Certified)</li>
+                    <li><i class="fab fa-python"></i> Python (AsyncIO, Sockets)</li>
+                    <li><i class="fas fa-microchip"></i> C++ / C</li>
+                    <li><i class="fab fa-java"></i> Java</li>
+                    <li><i class="fas fa-database"></i> SQL (T-SQL, PostgreSQL, SQLite)</li>
+                </ul>
+            </div>
+
+            <div class="skill-category-card">
+                <h4 class="category-heading"><i class="fas fa-shield-halved"></i> Systems & Security</h4>
+                <ul class="skills-list">
+                    <li><i class="fas fa-network-wired"></i> Raw Socket Programming (TCP/IP)</li>
+                    <li><i class="fas fa-lock"></i> Zero-Trust IAM & Anomaly Detection</li>
+                    <li><i class="fas fa-brain"></i> Machine Learning (Isolation Forest, RF)</li>
+                    <li><i class="fab fa-linux"></i> Linux Operating Environments</li>
+                    <li><i class="fab fa-docker"></i> Docker Containerization</li>
+                </ul>
+            </div>
+
+            <div class="skill-category-card">
+                <h4 class="category-heading"><i class="fas fa-layer-group"></i> Frameworks & Platforms</h4>
+                <ul class="skills-list">
+                    <li><i class="devicon-flutter-plain"></i> Flutter & Dart (Cross-Platform)</li>
+                    <li><i class="fas fa-bolt"></i> FastAPI (Python REST)</li>
+                    <li><i class="fab fa-node-js"></i> Node.js & Hono API</li>
+                    <li><i class="fas fa-server"></i> SQLAlchemy ORM & Azure SQL</li>
+                    <li><i class="fab fa-git-alt"></i> Git Version Control & CI/CD</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 Marcos Cruz Bazan // Engineered in Florida // All signals operational.</p>
-    </footer>
+</main>
+
+<!-- Interactive Protocol Visualizer Modal (RFC 959 Testbench) -->
+<div class="modal-backdrop" id="testbench-modal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div class="modal-title-group">
+                <span class="modal-tag">INTERACTIVE TESTBENCH</span>
+                <h3 class="modal-title">RFC 959 FTP Protocol & PASV Port Math</h3>
+            </div>
+            <button class="modal-close-btn" id="close-testbench-btn" aria-label="Close Testbench Modal">&times;</button>
+        </div>
+
+        <p class="modal-intro">
+            Simulates dynamic passive transport port negotiation. When the client executes <code>PASV</code>, the server returns 6 octets <code>(h1,h2,h3,h4,p1,p2)</code>. The client shifts bits to derive the dynamic transport port: <code>(p1 &times; 256) + p2</code>.
+        </p>
+
+        <div class="testbench-stage">
+            <div class="terminal-node">
+                <div class="node-title"><i class="fas fa-desktop"></i> Client Host</div>
+                <div class="node-sub">10.0.4.12:49812</div>
+            </div>
+
+            <div class="packet-lane">
+                <div id="packet-carrier" class="packet-carrier">
+                    <span id="packet-payload" class="packet-payload">READY</span>
+                </div>
+            </div>
+
+            <div class="terminal-node">
+                <div class="node-title"><i class="fas fa-server"></i> FTP Server</div>
+                <div class="node-sub">198.51.100.24:21</div>
+            </div>
+        </div>
+
+        <div class="calculator-panel">
+            <div class="calc-top-row">
+                <span>PASV Response:</span>
+                <code>227 Entering Passive Mode (198,51,100,24,<strong id="val-p1">195</strong>,<strong id="val-p2">80</strong>)</code>
+            </div>
+            <div class="calc-controls">
+                <label>Octet P1: <input type="range" id="p1-slider" min="100" max="250" value="195"></label>
+                <label>Octet P2: <input type="range" id="p2-slider" min="1" max="255" value="80"></label>
+                <div class="calc-result">
+                    Calculated Data Port: <span class="highlight-val" id="computed-port">50000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="testbench-console" id="testbench-feed">
+            <div class="console-line info">> Simulator ready. Trigger a step below to inspect transmission.</div>
+        </div>
+
+        <div class="testbench-actions">
+            <button id="btn-seq-connect" class="btn btn-sm btn-secondary">1. TCP Handshake (:21)</button>
+            <button id="btn-seq-pasv" class="btn btn-sm btn-secondary">2. Send PASV Command</button>
+            <button id="btn-seq-data" class="btn btn-sm btn-primary">3. Open Data Socket</button>
+            <button id="btn-seq-reset" class="btn btn-sm btn-ghost">Reset</button>
+        </div>
+    </div>
 </div>
 
-<script>
-    // Cyberpunk Neon Node Network Canvas
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height, particles;
+<footer class="site-footer">
+    <div class="container footer-content">
+        <div class="footer-center" style="text-align: center; width: 100%;">
+            <strong>Marcos Cruz Bazan</strong> &mdash; Systems & Software Engineer
+        </div>
+    </div>
+</footer>
 
-    function init() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        particles = [];
-        const numParticles = Math.min(Math.floor(window.innerWidth / 18), 80);
-
-        for (let i = 0; i < numParticles; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                radius: Math.random() * 1.5 + 0.8
-            });
-        }
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, width, height);
-
-        for (let i = 0; i < particles.length; i++) {
-            let p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-
-            if (p.x < 0 || p.x > width) p.vx *= -1;
-            if (p.y < 0 || p.y > height) p.vy *= -1;
-
-            ctx.fillStyle = 'rgba(0, 240, 255, 0.45)';
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                let p2 = particles[j];
-                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-
-                if (dist < 110) {
-                    ctx.strokeStyle = `rgba(0, 240, 255, ${0.25 * (1 - dist / 110)})`;
-                    ctx.lineWidth = 0.6;
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-
-    window.addEventListener('resize', init);
-    init();
-    animate();
-
-    // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
-
-    document.querySelectorAll('.project-card').forEach(card => observer.observe(card));
-</script>
-
+<script src="assets/js/app.js"></script>
 </body>
 </html>

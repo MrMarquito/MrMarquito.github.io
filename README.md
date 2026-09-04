@@ -2,7 +2,7 @@
 
 A high-performance personal portfolio built with a futuristic cyberpunk HUD aesthetic, designed to showcase systems engineering, low-latency architectures, and cross-platform applications.
 
-Live deployment: **[https://mrmarquito.github.io/](https://mrmarquito.github.io/)**[cite: 3]
+Live deployment: **[https://mrmarquito.github.io/](https://mrmarquito.github.io/)**
 
 ---
 
@@ -20,7 +20,7 @@ Live deployment: **[https://mrmarquito.github.io/](https://mrmarquito.github.io/
 
 | System | Architecture & Stack | Focus Area |
 | :--- | :--- | :--- |
-| **TruthScore** | Flutter, FastAPI, Node/Hono, Azure SQL, Scikit-Learn[cite: 2] | Dynamic zero-trust IAM risk scoring and Explainable AI (XAI)[cite: 2] |
+| **TruthScore** | Flutter, FastAPI, Node/Hono, Azure SQL, Scikit-Learn | Dynamic zero-trust IAM risk scoring and Explainable AI (XAI) |
 | **Culinary Engine** | Flutter, Dart, Spoonacular API, `shared_preferences` | Heuristic search, infinite pagination, and client-side offline caching |
 | **GeekText RESTful API** | FastAPI, SQLAlchemy, SQLite, Flutter Web | High-throughput bookstore API and ORM database design |
 | **FleetFlow Logistics** | C++, Object-Oriented Kinematics | Kinematic vehicle simulation and spatial trajectory modeling |
