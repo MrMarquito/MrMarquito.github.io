@@ -24,7 +24,7 @@ Live deployment: **[https://mrmarquito.github.io/](https://mrmarquito.github.io/
 | :--- | :--- | :--- |
 | **TruthScore** | Flutter, FastAPI, Node/Hono, Azure SQL, Scikit-Learn | Dynamic zero-trust IAM risk scoring and Explainable AI (XAI) |
 | **Socket FTP Protocol Client** | Python, Raw BSD Sockets, TCP/IP, RFC 959 | Bare-metal TCP handshake handling, PASV bit-shifting, and packet streams |
-| **StockFW**                    | [Stack]                                               | [Focus area]                                                                 |
+| **StockFW**                    | FastAPI, PostgreSQL, Flutter, Scikit-Learn, Docker    | Atomic inventory ledger, EOQ auto-replenishment, and ML shrinkage detection |
 | **SchemaFlow Studio** | Flutter Web, Canvas API, SQL DDL | Visual entity-relationship graph modeling and dynamic ANSI SQL generation |
 | **Pacioli Ledger Engine**      | Rust, PostgreSQL, Axum, SHA-256 Audit Chain           | Double-entry ledger integrity, deadlock-free locking, and tamper-evident audit trails |
 | **Culinary Engine** | Flutter, Dart, REST Integration, Client-Side Cache | Typo-tolerant heuristic queries, infinite scrolling, and offline persistence |
