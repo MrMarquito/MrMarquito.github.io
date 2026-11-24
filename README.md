@@ -9,7 +9,7 @@ Live deployment: **[https://mrmarquito.github.io/](https://mrmarquito.github.io/
 ## Architecture & Visual Features
 
 * **Systems & Infrastructure UI:** Engineered with a focused dark-mode developer theme utilizing custom CSS properties, balanced contrast ratios, and scannable typographic hierarchy (*Inter*, *JetBrains Mono*).
-* **Interactive RFC 959 Protocol Sandbox:** Built-in modal testbench simulating low-level FTP transport handshakes and dynamic passive mode (`PASV`) port decoding: `(P1 * 256) + P2`.
+* **Interactive FTP Demo:** A browser-only walkthrough of connecting to a sample server, choosing a file, and simulating a download. Optional protocol details explain `PASV` and how the client finds the file transfer port.
 * **Modular Codebase:** Decoupled architecture separating presentation logic, styling tokens, and interactive scripts across dedicated asset directories.
 * **Domain Filter Switchboard:** Client-side category filtering enabling seamless views across Systems & Networks, Security & AI, and Full Stack applications.
 * **Ambient Canvas Engine:** Vanilla JavaScript HTML5 Canvas particle engine rendering real-time interactive vector nodes without layout reflows.

@@ -123,94 +123,66 @@ initCanvas();
 renderCanvas();
 
 /* ==========================================================================
-   3. Interactive RFC 959 PASV Modal Logic
+   3. Guided FTP Download Demo
    ========================================================================== */
 const modal = document.getElementById('testbench-modal');
 const openBtn = document.getElementById('open-testbench-btn');
-const closeBtn = document.getElementById('close-testbench-btn');
-
 if (openBtn && modal) {
-    openBtn.addEventListener('click', () => modal.classList.add('active'));
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    const connect = document.getElementById('ftp-connect');
+    const file = document.getElementById('ftp-file');
+    const download = document.getElementById('ftp-download');
+    const restart = document.getElementById('ftp-restart');
+    const status = document.getElementById('ftp-status');
+    const details = document.getElementById('ftp-details');
+    const initialMessage = status.textContent;
+
+    function resetDemo() {
+        connect.disabled = false;
+        file.value = '';
+        file.disabled = true;
+        download.disabled = true;
+        restart.hidden = true;
+        details.open = false;
+        status.textContent = initialMessage;
+        modal.scrollTop = 0;
+    }
+
+    openBtn.addEventListener('click', () => {
+        resetDemo();
+        // Some browsers do not focus buttons on pointer activation.
+        openBtn.focus({ preventScroll: true });
+        modal.showModal();
+    });
+    document.getElementById('close-testbench-btn').addEventListener('click', () => modal.close());
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
+        if (e.target !== modal) return;
+        const bounds = modal.getBoundingClientRect();
+        if (e.clientX < bounds.left || e.clientX > bounds.right ||
+            e.clientY < bounds.top || e.clientY > bounds.bottom) modal.close();
     });
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            modal.classList.remove('active');
-        }
+
+    connect.addEventListener('click', () => {
+        file.disabled = false;
+        restart.hidden = false;
+        status.textContent = 'Connected. The command connection is open. Choose a file to ask the server for it.';
+        file.focus();
+        connect.disabled = true;
+    });
+    file.addEventListener('change', () => {
+        download.disabled = !file.value;
+    });
+    download.addEventListener('click', () => {
+        status.textContent = `Simulated download complete: ${file.value} came through a separate file connection. That connection closed, while the command connection stayed open.`;
+        restart.focus();
+        file.disabled = true;
+        download.disabled = true;
+    });
+    restart.addEventListener('click', () => {
+        connect.disabled = false;
+        connect.focus();
+        resetDemo();
     });
 }
-
-// Testbench simulator state
-const p1Slider = document.getElementById('p1-slider');
-const p2Slider = document.getElementById('p2-slider');
-const valP1 = document.getElementById('val-p1');
-const valP2 = document.getElementById('val-p2');
-const computedPort = document.getElementById('computed-port');
-const carrier = document.getElementById('packet-carrier');
-const payload = document.getElementById('packet-payload');
-const consoleFeed = document.getElementById('testbench-feed');
-
-function updatePortCalc() {
-    const p1 = parseInt(p1Slider.value, 10);
-    const p2 = parseInt(p2Slider.value, 10);
-    valP1.innerText = p1;
-    valP2.innerText = p2;
-    const port = (p1 * 256) + p2;
-    computedPort.innerText = port;
-    return port;
-}
-
-if (p1Slider && p2Slider) {
-    p1Slider.addEventListener('input', updatePortCalc);
-    p2Slider.addEventListener('input', updatePortCalc);
-}
-
-function writeConsole(msg, type = 'info') {
-    if (!consoleFeed) return;
-    const line = document.createElement('div');
-    line.className = `console-line ${type}`;
-    line.innerText = `> ${msg}`;
-    consoleFeed.appendChild(line);
-    consoleFeed.scrollTop = consoleFeed.scrollHeight;
-}
-
-document.getElementById('btn-seq-connect')?.addEventListener('click', () => {
-    carrier.style.left = '80%';
-    payload.innerText = 'SYN (:21)';
-    writeConsole('Client initiates TCP handshake: SYN -> Server:21', 'tx');
-    setTimeout(() => {
-        carrier.style.left = '0%';
-        payload.innerText = '220 READY';
-        writeConsole('Server response: 220 Service ready for user.', 'rx');
-    }, 700);
-});
-
-document.getElementById('btn-seq-pasv')?.addEventListener('click', () => {
-    carrier.style.left = '80%';
-    payload.innerText = 'PASV';
-    writeConsole('Client transmits command: PASV', 'tx');
-    const port = updatePortCalc();
-    setTimeout(() => {
-        carrier.style.left = '0%';
-        payload.innerText = `227 (:${port})`;
-        writeConsole(`Server replies: 227 Entering Passive Mode (198,51,100,24,${p1Slider.value},${p2Slider.value}) -> Calculated Port: ${port}`, 'rx');
-    }, 700);
-});
-
-document.getElementById('btn-seq-data')?.addEventListener('click', () => {
-    const port = updatePortCalc();
-    carrier.style.left = '80%';
-    payload.innerText = `STREAM :${port}`;
-    writeConsole(`Direct byte-stream data channel established on port ${port}.`, 'info');
-});
-
-document.getElementById('btn-seq-reset')?.addEventListener('click', () => {
-    carrier.style.left = '0%';
-    payload.innerText = 'READY';
-    consoleFeed.innerHTML = '<div class="console-line info">> Simulator reset. Ready for sequence.</div>';
-});
 
 /* ==========================================================================
    4. Category Filter Switchboard

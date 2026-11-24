@@ -58,10 +58,10 @@
     <!-- Hero Section -->
     <section class="hero-section" id="about">
         <h1 class="hero-headline">
-            Engineering low-latency systems, reliable networking, and intelligent infrastructure.
+            I build fast, reliable software.
         </h1>
         <p class="hero-subline">
-            Apple Certified Swift Developer building high-performance architectures. Experienced across zero-trust IAM risk scoring, raw socket protocol implementations, and production-grade full-stack systems.
+            My work spans networking, security, and full-stack development.
         </p>
 
         <div class="hero-cta-group">
@@ -124,7 +124,7 @@
                 </div>
             </div>
 
-            <!-- Socket FTP Client (With Testbench Modal Trigger) -->
+            <!-- Socket FTP Client -->
             <div class="project-card" data-category="systems">
                 <div class="card-top">
                     <div class="card-badges">
@@ -144,7 +144,7 @@
                         <span>RFC 959</span>
                     </div>
                     <div class="card-actions">
-                        <button class="btn btn-sm btn-primary" id="open-testbench-btn">
+                        <button type="button" class="btn btn-sm btn-primary" id="open-testbench-btn" aria-haspopup="dialog">
                             <i class="fas fa-terminal"></i> Interactive Demo
                         </button>
                         <a href="https://github.com/MrMarquito/CNT-Project-1" target="_blank" class="btn btn-sm btn-secondary">
@@ -319,65 +319,49 @@
 
 </main>
 
-<!-- Interactive Protocol Visualizer Modal (RFC 959 Testbench) -->
-<div class="modal-backdrop" id="testbench-modal">
-    <div class="modal-card">
-        <div class="modal-header">
-            <div class="modal-title-group">
-                <span class="modal-tag">INTERACTIVE TESTBENCH</span>
-                <h3 class="modal-title">RFC 959 FTP Protocol & PASV Port Math</h3>
-            </div>
-            <button class="modal-close-btn" id="close-testbench-btn" aria-label="Close Testbench Modal">&times;</button>
+<!-- Guided FTP Demo -->
+<dialog class="ftp-dialog" id="testbench-modal" aria-labelledby="ftp-demo-title" aria-describedby="ftp-demo-intro">
+    <div class="modal-header">
+        <div>
+            <span class="modal-tag">BROWSER SIMULATION</span>
+            <h2 class="modal-title" id="ftp-demo-title">How FTP downloads a file</h2>
         </div>
-
-        <p class="modal-intro">
-            Simulates dynamic passive transport port negotiation. When the client executes <code>PASV</code>, the server returns 6 octets <code>(h1,h2,h3,h4,p1,p2)</code>. The client shifts bits to derive the dynamic transport port: <code>(p1 &times; 256) + p2</code>.
-        </p>
-
-        <div class="testbench-stage">
-            <div class="terminal-node">
-                <div class="node-title"><i class="fas fa-desktop"></i> Client Host</div>
-                <div class="node-sub">10.0.4.12:49812</div>
-            </div>
-
-            <div class="packet-lane">
-                <div id="packet-carrier" class="packet-carrier">
-                    <span id="packet-payload" class="packet-payload">READY</span>
-                </div>
-            </div>
-
-            <div class="terminal-node">
-                <div class="node-title"><i class="fas fa-server"></i> FTP Server</div>
-                <div class="node-sub">198.51.100.24:21</div>
-            </div>
-        </div>
-
-        <div class="calculator-panel">
-            <div class="calc-top-row">
-                <span>PASV Response:</span>
-                <code>227 Entering Passive Mode (198,51,100,24,<strong id="val-p1">195</strong>,<strong id="val-p2">80</strong>)</code>
-            </div>
-            <div class="calc-controls">
-                <label>Octet P1: <input type="range" id="p1-slider" min="100" max="250" value="195"></label>
-                <label>Octet P2: <input type="range" id="p2-slider" min="1" max="255" value="80"></label>
-                <div class="calc-result">
-                    Calculated Data Port: <span class="highlight-val" id="computed-port">50000</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="testbench-console" id="testbench-feed">
-            <div class="console-line info">> Simulator ready. Trigger a step below to inspect transmission.</div>
-        </div>
-
-        <div class="testbench-actions">
-            <button id="btn-seq-connect" class="btn btn-sm btn-secondary">1. TCP Handshake (:21)</button>
-            <button id="btn-seq-pasv" class="btn btn-sm btn-secondary">2. Send PASV Command</button>
-            <button id="btn-seq-data" class="btn btn-sm btn-primary">3. Open Data Socket</button>
-            <button id="btn-seq-reset" class="btn btn-sm btn-ghost">Reset</button>
-        </div>
+        <button type="button" class="modal-close-btn" id="close-testbench-btn" aria-label="Close FTP demo">&times;</button>
     </div>
-</div>
+
+    <p class="modal-intro" id="ftp-demo-intro">
+        FTP uses one connection to ask for a file and another to send it. Try a sample transfer. No server is contacted and nothing is saved to your device.
+    </p>
+
+    <ol class="ftp-steps">
+        <li>
+            <button type="button" id="ftp-connect" class="btn btn-sm btn-primary" autofocus>Connect</button>
+            <span>Open the connection used to send commands.</span>
+        </li>
+        <li>
+            <label for="ftp-file">Choose a sample file</label>
+            <select id="ftp-file" disabled>
+                <option value="">Pick a file…</option>
+                <option value="notes.txt">notes.txt</option>
+                <option value="photo.jpg">photo.jpg</option>
+            </select>
+        </li>
+        <li>
+            <button type="button" id="ftp-download" class="btn btn-sm btn-primary" disabled>Download</button>
+            <span>Receive the file over a separate connection.</span>
+        </li>
+    </ol>
+
+    <p class="ftp-status" id="ftp-status" role="status">Start by connecting to the sample server.</p>
+    <button type="button" id="ftp-restart" class="btn btn-sm btn-ghost" hidden>Restart</button>
+
+    <details class="ftp-details" id="ftp-details">
+        <summary>Protocol details</summary>
+        <p>The command connection usually starts on port 21. Before asking for a file, the client sends <code>PASV</code> to find out where to open the separate file connection.</p>
+        <p>Example: the server replies <code>227 Entering Passive Mode (198,51,100,24,195,80)</code>. The client combines the last two numbers to get the file connection’s port: <code>195 × 256 + 80 = 50000</code>.</p>
+        <p>The client opens that connection and sends <code>RETR notes.txt</code> on the command connection. The server sends the file over the new connection and then closes it.</p>
+    </details>
+</dialog>
 
 <footer class="site-footer">
     <div class="container footer-content">
